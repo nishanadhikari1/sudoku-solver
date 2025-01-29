@@ -83,17 +83,14 @@ function findEmptyCell(grid: SudokuGrid): [number, number] | null {
 }
 
 function isValid(grid: SudokuGrid, row: number, col: number, num: number): boolean {
-  // Check row
   for (let x = 0; x < 9; x++) {
     if (grid[row][x] === num) return false
   }
 
-  // Check column
   for (let x = 0; x < 9; x++) {
     if (grid[x][col] === num) return false
   }
 
-  // Check 3x3 box
   const boxRow = Math.floor(row / 3) * 3
   const boxCol = Math.floor(col / 3) * 3
   for (let i = 0; i < 3; i++) {
