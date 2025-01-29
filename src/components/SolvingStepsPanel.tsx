@@ -11,19 +11,17 @@ const SolvingStepsPanel: React.FC<SolvingStepsPanelProps> = ({ steps, currentSte
   const stepsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    console.log("Steps updated:", steps) // Log steps to verify if they are being updated
+    console.log("Steps updated:", steps)
     if (stepsRef.current) {
-      // Auto-scroll to the bottom when a new step is added
       stepsRef.current.scrollTop = stepsRef.current.scrollHeight
     }
-  }, [steps]) // Only depend on 'steps' to auto-scroll when new steps are added
+  }, [steps]) 
 
   useEffect(() => {
     if (stepsRef.current) {
-      // Auto-scroll to the bottom when the currentStepIndex changes
       stepsRef.current.scrollTop = stepsRef.current.scrollHeight
     }
-  }, [currentStepIndex]) // This will run whenever the currentStepIndex is updated
+  }, [currentStepIndex]) 
 
   return (
     <div className="w-80 h-[600px] bg-gray-900 rounded-3xl p-4 shadow-lg relative overflow-hidden border border-green-500">
@@ -34,9 +32,9 @@ const SolvingStepsPanel: React.FC<SolvingStepsPanelProps> = ({ steps, currentSte
           ref={stepsRef}
           className="flex-1 overflow-y-auto font-mono text-sm pr-2 custom-scrollbar"
           style={{
-            scrollbarWidth: "none", // For Firefox
-            msOverflowStyle: "none", // For Internet Explorer
-            scrollBehavior: "smooth", // Smooth scrolling when new steps are added
+            scrollbarWidth: "none",
+            msOverflowStyle: "none", 
+            scrollBehavior: "smooth", 
           }}
         >
           {steps.slice(0, currentStepIndex + 1).map((step, index) => (
