@@ -8,9 +8,8 @@ export interface SolveStep {
 }
 
 export function solveSudoku(grid: SudokuGrid, callback: (step: SolveStep) => void): boolean {
-  // Check if the initial grid is valid
   if (!isInitialGridValid(grid)) {
-    return false // Return false if the grid has contradictions
+    return false
   }
 
   const emptyCell = findEmptyCell(grid)
@@ -36,39 +35,35 @@ export function solveSudoku(grid: SudokuGrid, callback: (step: SolveStep) => voi
 }
 
 function isInitialGridValid(grid: SudokuGrid): boolean {
-  // Check if there are any duplicate values in rows, columns, or 3x3 boxes
   for (let row = 0; row < 9; row++) {
     for (let col = 0; col < 9; col++) {
       const value = grid[row][col]
       if (value !== null) {
-        // Check row for duplicates
         for (let i = 0; i < 9; i++) {
           if (i !== col && grid[row][i] === value) {
-            return false // Duplicate in row
+            return false
           }
         }
 
-        // Check column for duplicates
         for (let i = 0; i < 9; i++) {
           if (i !== row && grid[i][col] === value) {
-            return false // Duplicate in column
+            return false 
           }
         }
 
-        // Check 3x3 box for duplicates
         const boxRow = Math.floor(row / 3) * 3
         const boxCol = Math.floor(col / 3) * 3
         for (let i = 0; i < 3; i++) {
           for (let j = 0; j < 3; j++) {
             if (boxRow + i !== row && boxCol + j !== col && grid[boxRow + i][boxCol + j] === value) {
-              return false // Duplicate in 3x3 box
+              return false
             }
           }
         }
       }
     }
   }
-  return true // No contradictions found
+  return true 
 }
 
 function findEmptyCell(grid: SudokuGrid): [number, number] | null {
