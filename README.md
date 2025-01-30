@@ -13,7 +13,7 @@ A modern web-based Sudoku solver built with React, TypeScript, and Tailwind CSS.
 
 ## Technologies Used
 
-- React 18
+- React
 - TypeScript
 - Tailwind CSS
 
