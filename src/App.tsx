@@ -102,7 +102,7 @@ const App: React.FC = () => {
             />
             {message && (
               <div 
-                className={`w-full p-4 rounded-lg text-center font-medium mt-4 ${
+                className={`w-[250px] p-4 rounded-lg text-center font-medium mt-4 ${
                   message.type === 'success' 
                     ? 'bg-green-900/50 text-green-400' 
                     : 'bg-red-900/50 text-red-400'
