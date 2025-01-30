@@ -21,7 +21,7 @@ A modern web-based Sudoku solver built with React, TypeScript, and Tailwind CSS.
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
+- Node.js
 - npm
 
 ### Installation
