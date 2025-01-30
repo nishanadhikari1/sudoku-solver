@@ -14,7 +14,6 @@ const App: React.FC = () => {
   const [steps, setSteps] = useState<SolveStep[]>([])
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(-1)
   const [highlightedCell, setHighlightedCell] = useState<[number, number] | null>(null)
-  const [isSolving, setIsSolving] = useState(false)
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null)
 
   const handleCellChange = (row: number, col: number, value: number | null) => {
@@ -33,7 +32,6 @@ const App: React.FC = () => {
   }
 
   const handleSolvePuzzle = useCallback(() => {
-    setIsSolving(true)
     setSteps([])
     setCurrentStepIndex(-1)
     setMessage(null)
@@ -50,12 +48,10 @@ const App: React.FC = () => {
     if (!isSolved) {
       setMessage({ text: "Puzzle is unsolvable!", type: 'error' })
       setSteps([])
-      setIsSolving(false)
       return
     }
 
     setSteps(allSteps)
-    setIsSolving(false)
   }, [grid])
 
   const handleClearPuzzle = () => {
@@ -103,7 +99,6 @@ const App: React.FC = () => {
               onGeneratePuzzle={handleGeneratePuzzle}
               onSolvePuzzle={handleSolvePuzzle}
               onClearPuzzle={handleClearPuzzle}
-              disabled={isSolving}
             />
             {message && (
               <div 
