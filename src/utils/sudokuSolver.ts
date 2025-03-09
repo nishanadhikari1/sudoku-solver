@@ -98,25 +98,56 @@ function isValid(grid: SudokuGrid, row: number, col: number, num: number): boole
 }
 
 export function generateSudoku(difficulty: "easy" | "medium" | "hard"): SudokuGrid {
-  const grid: SudokuGrid = Array(9)
-    .fill(null)
-    .map(() => Array(9).fill(null))
-  solveSudoku(grid, () => {})
+  let grid: SudokuGrid = Array(9).fill(null).map(() => Array(9).fill(null));
 
-  const cellsToRemove = {
-    easy: 30,
-    medium: 40,
-    hard: 50,
-  }[difficulty]
+  fillDiagonalBoxes(grid); 
 
-  for (let i = 0; i < cellsToRemove; i++) {
-    let row, col
-    do {
-      row = Math.floor(Math.random() * 9)
-      col = Math.floor(Math.random() * 9)
-    } while (grid[row][col] === null)
-    grid[row][col] = null
-  }
+  solveSudoku(grid, () => {});
 
-  return grid
+  const cellsToRemove = { easy: 30, medium: 40, hard: 50 }[difficulty];
+  removeNumbers(grid, cellsToRemove);
+
+  return grid;
 }
+
+function fillDiagonalBoxes(grid: SudokuGrid) {
+  for (let box = 0; box < 9; box += 3) {
+    let nums = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        grid[box + i][box + j] = nums.pop()!;
+      }
+    }
+  }
+}
+
+function removeNumbers(grid: SudokuGrid, count: number) {
+  let attempts = count;
+  while (attempts > 0) {
+    let row = Math.floor(Math.random() * 9);
+    let col = Math.floor(Math.random() * 9);
+    while (grid[row][col] === null) {
+      row = Math.floor(Math.random() * 9);
+      col = Math.floor(Math.random() * 9);
+    }
+    let backup = grid[row][col];
+    grid[row][col] = null;
+
+    let tempGrid = JSON.parse(JSON.stringify(grid));
+    if (!solveSudoku(tempGrid, () => {})) {
+      grid[row][col] = backup;
+    } else {
+      attempts--;
+    }
+  }
+}
+
+function shuffle(array: number[]): number[] {
+  for (let i = array.length - 1; i > 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+
+    [array[i], array[randomIndex]] = [array[randomIndex], array[i]];
+  }
+  return array;
+}
+
